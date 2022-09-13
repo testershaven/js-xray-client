@@ -5,7 +5,7 @@ async function reportToXray(options) {
     try {
         let worker = new Worker();
         await worker.checkOptions(options);
-        let requestBody = worker.generateRequest(options.resultsFoldern, options.fileName);
+        let requestBody = worker.generateRequest(options.resultsFolder, options.fileName);
 
         const client = new Client(options.host);
         if(options.security){
