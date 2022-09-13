@@ -1,0 +1,13 @@
+.idea
+.DS_Store
+node_modules
+.logs
+.env
+temp/
+.vscode/
+.vscode/**
+test.mjs
+*.http
+package-lock.json
+test.js
+.npmrc

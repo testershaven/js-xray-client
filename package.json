@@ -1,0 +1,19 @@
+{
+    "name": "xray-junit-client",
+    "version": "1.0.1",
+    "main": "index.js",
+    "scripts": {
+        "test": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Saetabis1/xray-junit-client.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Saetabis1/xray-junit-client/issues"
+      },
+    "dependencies": {
+        "axios": "^0.26.1"
+    },
+    "homepage": "https://github.com/Saetabis1/xray-junit-client"
+}
