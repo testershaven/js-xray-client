@@ -1,6 +1,6 @@
 
 # Xray Service Client
-This is a 2 classes package that allows you to easily connect to an xray server, and upload junit reports
+This is a 2 classes package that allows you to easily connect to an xray server, and upload junit reports, using as reference this [xray-doc](https://docs.getxray.app/display/XRAYCLOUD/Testing+web+applications+using+Mocha+and+WebdriverIO)
 
 ## Installation
     - npm install xray-service-client
