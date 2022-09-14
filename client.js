@@ -11,10 +11,20 @@ class Client {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + loginResponse.data;
   }
 
-  async sendResults(projectName, testplan = '', requestBody) {
+  async sendResultsAsJunitReport(projectName, testplan = '', requestBody) {
     let config = { headers: {'Content-Type': 'text/xml'} };
     let path = `/import/execution/junit?projectKey=${projectName}` + (testplan !== '') ? `&testPlanKey=${testplan}` : '';
     return await axios.post(path, requestBody, config);
+  }
+
+  async sendResultsAsXrayJson(requestBody) {
+    let config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      }
+    };
+    return await axios.post('/import/execution', requestBody, config);
   }
 }
 

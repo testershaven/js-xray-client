@@ -1,18 +1,6 @@
 const fs = require("fs");
 
 class Worker {
-    cleanFolder(resultsDir) {
-        const fileNames = fs.readdirSync(resultsDir);
-        fileNames.forEach((fileName) => {
-            fs.unlinkSync(`${resultsDir}/${fileName}`);
-        });
-    }
-
-    generateRequest(resultsDir, fileName) {
-        let rawContent = fs.readFileSync(`${resultsDir}/${fileName}`).toString();
-        return rawContent;
-    };
-
     checkOptions(options){
         if (!options.project) throw new InputError('Project not provided');
         if (!options.resultsFolder) throw new InputError('Results Folder not provided');
@@ -22,6 +10,81 @@ class Worker {
             if (!options.security.client_id) throw new InputError('Security enabled but client_id not provided');
             if (!options.security.client_secret) throw new InputError('Security enabled but client_secret not provided');
         }
+    }
+
+    cleanFolder(resultsDir) {
+        const fileNames = fs.readdirSync(resultsDir);
+        fileNames.forEach((fileName) => {
+            fs.unlinkSync(`${resultsDir}/${fileName}`);
+        });
+    }
+
+    generateXmlRequestBody(resultsDir, fileName) {
+        let rawContent = fs.readFileSync(`${resultsDir}/${fileName}`).toString();
+        return rawContent;
+    };
+
+    generateXrayRequestFromAllureJson(testSuites, testplanKey = '',executionKey = '') {
+        let info = {
+            summary : "Execution of automated tests for release v1.3",
+            description : "This execution is automatically created when importing execution results from an external source",
+            startDate : this.formatEpoch(Math.min(...testSuites.map(x => parseInt(x.start)))),
+            finishDate : this.formatEpoch(Math.max(...testSuites.map(x => parseInt(x.stop)))),
+            testPlanKey : testplanKey,
+        }
+
+        let testCases = [];
+        testSuites.forEach(rts => {
+            rts.testCases.forEach(rtc => {
+                let defects = [];
+                if (rtc.issueId !== '') {
+                    defects.push(rtc.issueId)
+                }
+
+                let steps = [];
+                let evidence = [];
+                for (const step of rtc.steps) {
+                    if (step.attachment.contentType !== undefined) {
+                        evidence.push(step.attachment)
+                    }
+
+                    let newStep =  {
+                        status: step.status,
+                        comment: step.name._text,
+                    }
+                    steps.push(newStep);
+                }
+
+                let message = (rtc.failure.message === undefined) ? { message: "No errors"} : rtc.failure.message;
+                let comment = {
+                    steps: JSON.stringify(steps),
+                    message
+                }
+
+                let testCase = {
+                    testKey : rtc.testId,
+                    start : this.formatEpoch(parseInt(rtc.start)),
+                    finish : this.formatEpoch(parseInt(rtc.stop)),
+                    status : rtc.status,
+                    comment: JSON.stringify(comment),
+                    defects,
+                    evidence,
+                };
+                testCases.push(testCase);
+            });
+        });
+
+        let response = {
+            info: info,
+            tests: testCases
+        }
+        if(executionKey !== '') response['executionKey'] = executionKey;
+
+        return response;
+    };
+
+    formatEpoch(epoch) {
+        return new Date(epoch).toISOString().split('.')[0] + '+00:00'
     }
 }
 

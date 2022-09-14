@@ -1,0 +1,345 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1663143627170' stop='1663143698932'>
+    <name>*************SALES INVOICE***********</name>
+    <title>*************SALES INVOICE***********</title>
+    <test-cases>
+        <test-case start='1663143629249' status='failed' stop='1663143652195'>
+            <name>Create sales invoice </name>
+            <title>Create sales invoice </title>
+            <labels>
+                <label name='language' value='javascript'/>
+                <label name='framework' value='wdio'/>
+                <label name='thread' value='0-1'/>
+                <label name='testId' value='https://heathmont.testrail.io/index.php?/cases/view/CGQA-163'/>
+            </labels>
+            <parameters>
+                <parameter kind='argument' name='browser' value='chrome-105.0.5195.126'/>
+            </parameters>
+            <steps>
+                <step start='1663143629249' status='passed' stop='1663143629978'>
+                    <name>2022-09-14T08:20:29.249Z -- Clicking on sales invoice</name>
+                    <title>2022-09-14T08:20:29.249Z -- Clicking on sales invoice</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143629978' status='passed' stop='1663143630016'>
+                    <name>2022-09-14T08:20:29.978Z -- landed on sles Invoices page</name>
+                    <title>2022-09-14T08:20:29.978Z -- landed on sles Invoices page</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143630055' status='passed' stop='1663143631036'>
+                    <name>2022-09-14T08:20:30.055Z -- sales invoice creation initiated</name>
+                    <title>2022-09-14T08:20:30.055Z -- sales invoice creation initiated</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143631037' status='passed' stop='1663143631095'>
+                    <name>2022-09-14T08:20:31.037Z -- landed on New Sales Invoices page</name>
+                    <title>2022-09-14T08:20:31.037Z -- landed on New Sales Invoices page</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143631166' status='passed' stop='1663143631564'>
+                    <name>2022-09-14T08:20:31.166Z -- sales invoice data input initiated</name>
+                    <title>2022-09-14T08:20:31.166Z -- sales invoice data input initiated</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143631564' status='failed' stop='1663143652195'>
+                    <name>2022-09-14T08:20:31.564Z -- Business Selected</name>
+                    <title>2022-09-14T08:20:31.564Z -- Business Selected</title>
+                    <attachments>
+                        <attachment title='Screenshot' source='3770a3cd-2f84-4739-b2e2-c0985ca5b883-attachment.png' type='image/png' size='71139'/>
+                    </attachments>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments/>
+            <failure>
+                <message>CompoundError: One or more errors occurred. ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    javascript error: javascript error: arguments[0].click is not a function
+                      (Session info: chrome=105.0.5195.126)
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                        at async Browser.jsClick (browser-commands.js:9:5)
+                --- End of stack trace ---
+                </message>
+                <stack-trace>Error: CompoundError: One or more errors occurred. ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    javascript error: javascript error: arguments[0].click is not a function
+                      (Session info: chrome=105.0.5195.126)
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                        at async Browser.jsClick (browser-commands.js:9:5)
+                --- End of stack trace ---
+                
+                    at getErrorFromFailedTest (C:\dev\repos\e2e-tests\node_modules\@wdio\allure-reporter\build\utils.js:82:60)
+                    at AllureReporter.onTestFail (C:\dev\repos\e2e-tests\node_modules\@wdio\allure-reporter\build\index.js:217:73)
+                    at AllureReporter.&lt;anonymous> (C:\dev\repos\e2e-tests\node_modules\@wdio\reporter\build\index.js:121:18)
+                    at AllureReporter.emit (node:events:390:28)
+                    at AllureReporter.emit (node:domain:475:12)
+                    at C:\dev\repos\e2e-tests\node_modules\@wdio\runner\build\reporter.js:36:56
+                    at Array.forEach (&lt;anonymous>)
+                    at BaseReporter.emit (C:\dev\repos\e2e-tests\node_modules\@wdio\runner\build\reporter.js:36:25)
+                    at JasmineReporter.emit (C:\dev\repos\e2e-tests\node_modules\@wdio\jasmine-framework\build\reporter.js:152:24)
+                    at JasmineReporter.specDone (C:\dev\repos\e2e-tests\node_modules\@wdio\jasmine-framework\build\reporter.js:85:14)</stack-trace>
+            </failure>
+        </test-case>
+        <test-case start='1663143652198' status='failed' stop='1663143675033'>
+            <name>Edit sales invoice </name>
+            <title>Edit sales invoice </title>
+            <labels>
+                <label name='language' value='javascript'/>
+                <label name='framework' value='wdio'/>
+                <label name='thread' value='0-1'/>
+                <label name='testId' value='https://heathmont.testrail.io/index.php?/cases/view/CGQA-164'/>
+            </labels>
+            <parameters>
+                <parameter kind='argument' name='browser' value='chrome-105.0.5195.126'/>
+            </parameters>
+            <steps>
+                <step start='1663143652198' status='passed' stop='1663143652640'>
+                    <name>2022-09-14T08:20:52.198Z -- Clicking on sales invoice</name>
+                    <title>2022-09-14T08:20:52.198Z -- Clicking on sales invoice</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143652640' status='passed' stop='1663143652703'>
+                    <name>2022-09-14T08:20:52.640Z -- landed on sles Invoices page</name>
+                    <title>2022-09-14T08:20:52.640Z -- landed on sles Invoices page</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143652752' status='passed' stop='1663143653266'>
+                    <name>2022-09-14T08:20:52.752Z -- Navigate to an existing sales Invoice</name>
+                    <title>2022-09-14T08:20:52.752Z -- Navigate to an existing sales Invoice</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143653362' status='passed' stop='1663143654111'>
+                    <name>2022-09-14T08:20:53.362Z -- sales invoice edit initiated</name>
+                    <title>2022-09-14T08:20:53.362Z -- sales invoice edit initiated</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143654191' status='failed' stop='1663143675033'>
+                    <name>2022-09-14T08:20:54.191Z -- sales invoice edit</name>
+                    <title>2022-09-14T08:20:54.191Z -- sales invoice edit</title>
+                    <attachments>
+                        <attachment title='Screenshot' source='f10bcf17-3349-4e42-bad2-c539c5ca6e0f-attachment.png' type='image/png' size='67013'/>
+                    </attachments>
+                    <steps>
+                        <step start='1663143654700' status='passed' stop='1663143654838'>
+                            <name>2022-09-14T08:20:54.700Z -- Unit price edit</name>
+                            <title>2022-09-14T08:20:54.700Z -- Unit price edit</title>
+                            <attachments/>
+                            <steps/>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments/>
+            <failure>
+                <message>CompoundError: One or more errors occurred. ---
+                
+                    Error
+                        at &lt;Jasmine>
+                        at UserContext.&lt;anonymous> (salesInvoice.spec.js:54:50)
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    Error
+                        at &lt;Jasmine>
+                        at UserContext.&lt;anonymous> (salesInvoice.spec.js:55:58)
+                --- End of stack trace ---
+                </message>
+                <stack-trace>Error: CompoundError: One or more errors occurred. ---
+                
+                    Error
+                        at &lt;Jasmine>
+                        at UserContext.&lt;anonymous> (salesInvoice.spec.js:54:50)
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    Error
+                        at &lt;Jasmine>
+                        at UserContext.&lt;anonymous> (salesInvoice.spec.js:55:58)
+                --- End of stack trace ---
+                
+                    at getErrorFromFailedTest (C:\dev\repos\e2e-tests\node_modules\@wdio\allure-reporter\build\utils.js:82:60)
+                    at AllureReporter.onTestFail (C:\dev\repos\e2e-tests\node_modules\@wdio\allure-reporter\build\index.js:217:73)
+                    at AllureReporter.&lt;anonymous> (C:\dev\repos\e2e-tests\node_modules\@wdio\reporter\build\index.js:121:18)
+                    at AllureReporter.emit (node:events:390:28)
+                    at AllureReporter.emit (node:domain:475:12)
+                    at C:\dev\repos\e2e-tests\node_modules\@wdio\runner\build\reporter.js:36:56
+                    at Array.forEach (&lt;anonymous>)
+                    at BaseReporter.emit (C:\dev\repos\e2e-tests\node_modules\@wdio\runner\build\reporter.js:36:25)
+                    at JasmineReporter.emit (C:\dev\repos\e2e-tests\node_modules\@wdio\jasmine-framework\build\reporter.js:152:24)
+                    at JasmineReporter.specDone (C:\dev\repos\e2e-tests\node_modules\@wdio\jasmine-framework\build\reporter.js:85:14)</stack-trace>
+            </failure>
+        </test-case>
+        <test-case start='1663143675035' status='failed' stop='1663143698923'>
+            <name>Revert sales invoice </name>
+            <title>Revert sales invoice </title>
+            <labels>
+                <label name='language' value='javascript'/>
+                <label name='framework' value='wdio'/>
+                <label name='thread' value='0-1'/>
+                <label name='testId' value='https://heathmont.testrail.io/index.php?/cases/view/CGQA-165'/>
+                <label name='issue' value='https://coingaming.atlassian.net/browse/CGQA-164'/>
+            </labels>
+            <parameters>
+                <parameter kind='argument' name='browser' value='chrome-105.0.5195.126'/>
+            </parameters>
+            <steps>
+                <step start='1663143675035' status='passed' stop='1663143675605'>
+                    <name>2022-09-14T08:21:15.035Z -- Clicking on sales invoice</name>
+                    <title>2022-09-14T08:21:15.035Z -- Clicking on sales invoice</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143675605' status='passed' stop='1663143675653'>
+                    <name>2022-09-14T08:21:15.605Z -- landed on sles Invoices page</name>
+                    <title>2022-09-14T08:21:15.605Z -- landed on sles Invoices page</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143675689' status='passed' stop='1663143677364'>
+                    <name>2022-09-14T08:21:15.689Z -- sales invoice creation initiated</name>
+                    <title>2022-09-14T08:21:15.689Z -- sales invoice creation initiated</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143677364' status='passed' stop='1663143677415'>
+                    <name>2022-09-14T08:21:17.364Z -- landed on New Sales Invoices page</name>
+                    <title>2022-09-14T08:21:17.364Z -- landed on New Sales Invoices page</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143677453' status='passed' stop='1663143678329'>
+                    <name>2022-09-14T08:21:17.452Z -- sales invoice data input initiated</name>
+                    <title>2022-09-14T08:21:17.452Z -- sales invoice data input initiated</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1663143678329' status='failed' stop='1663143698923'>
+                    <name>2022-09-14T08:21:18.329Z -- Business Selected</name>
+                    <title>2022-09-14T08:21:18.329Z -- Business Selected</title>
+                    <attachments>
+                        <attachment title='Screenshot' source='22c8187a-d55d-4d7e-ba16-fa91f6bf32e9-attachment.png' type='image/png' size='64444'/>
+                    </attachments>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments/>
+            <failure>
+                <message>CompoundError: One or more errors occurred. ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    javascript error: javascript error: arguments[0].click is not a function
+                      (Session info: chrome=105.0.5195.126)
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                        at async Browser.jsClick (browser-commands.js:9:5)
+                --- End of stack trace ---
+                </message>
+                <stack-trace>Error: CompoundError: One or more errors occurred. ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    TypeError: elem[prop] is not a function
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                --- End of stack trace ---
+                
+                    javascript error: javascript error: arguments[0].click is not a function
+                      (Session info: chrome=105.0.5195.126)
+                        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                        at async Browser.jsClick (browser-commands.js:9:5)
+                --- End of stack trace ---
+                
+                    at getErrorFromFailedTest (C:\dev\repos\e2e-tests\node_modules\@wdio\allure-reporter\build\utils.js:82:60)
+                    at AllureReporter.onTestFail (C:\dev\repos\e2e-tests\node_modules\@wdio\allure-reporter\build\index.js:217:73)
+                    at AllureReporter.&lt;anonymous> (C:\dev\repos\e2e-tests\node_modules\@wdio\reporter\build\index.js:121:18)
+                    at AllureReporter.emit (node:events:390:28)
+                    at AllureReporter.emit (node:domain:475:12)
+                    at C:\dev\repos\e2e-tests\node_modules\@wdio\runner\build\reporter.js:36:56
+                    at Array.forEach (&lt;anonymous>)
+                    at BaseReporter.emit (C:\dev\repos\e2e-tests\node_modules\@wdio\runner\build\reporter.js:36:25)
+                    at JasmineReporter.emit (C:\dev\repos\e2e-tests\node_modules\@wdio\jasmine-framework\build\reporter.js:152:24)
+                    at JasmineReporter.specDone (C:\dev\repos\e2e-tests\node_modules\@wdio\jasmine-framework\build\reporter.js:85:14)</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

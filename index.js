@@ -1,18 +1,39 @@
 const {Client} = require("./client");
 const {Worker} = require("./worker");
+const {AllureWorker} = require("./allure_worker");
 
-async function reportToXray(options) {
+async function reportToXrayWithAllureReport(options) {
     try {
+        let allureWorker = new AllureWorker();
+        let suites = await allureWorker.generateSuitesFromAllureXml(options.resultsFolder);
+
         let worker = new Worker();
         await worker.checkOptions(options);
-        let requestBody = worker.generateRequest(options.resultsFolder, options.fileName);
+        let requestBody = worker.generateXrayRequestFromAllureJson(suites, options.testPlan, options.testExecutionKey);
 
         const client = new Client(options.host);
         if(options.security){
             await client.login(options.security.client_id, options.security.client_secret);
         }
 
-        await client.sendResults(options.project, options.testPlan, requestBody);
+        return await client.sendResultsAsXrayJson(JSON.stringify(requestBody));
+    } catch (e) {
+        console.error('Reports were not uploaded to Xray due error: ', e.message);
+    }
+}
+
+async function reportToXrayWithJunitReport(options) {
+    try {
+        let worker = new Worker();
+        await worker.checkOptions(options);
+        let requestBody = worker.generateXmlRequestBody(options.resultsFolder, options.fileName);
+
+        const client = new Client(options.host);
+        if(options.security){
+            await client.login(options.security.client_id, options.security.client_secret);
+        }
+
+        await client.sendResultsAsJunitReport(options.project, options.testPlan, requestBody);
 
         if(options.cleanupFilesAfterUpload) {
             await worker.cleanFolder(options.resultsFolder);
@@ -22,4 +43,4 @@ async function reportToXray(options) {
     }
 }
 
-module.exports = { reportToXray };
+module.exports = { reportToXrayWithJunitReport , reportToXrayWithAllureReport};

@@ -3,9 +3,12 @@
 This is a 2 classes package that allows you to easily connect to an xray server, and upload junit reports, using as reference this [xray-doc](https://docs.getxray.app/display/XRAYCLOUD/Testing+web+applications+using+Mocha+and+WebdriverIO)
 
 ## Installation
-    - npm install xray-service-client
+    - npm install xray-client
 
 ## Usage
+
+### For Junit xml
+
 Package contains only one public method reportToXray(options) where the options are
  - `project`: Name of the jira server project where you are pushing the results
  - `testPlan`: Name of the jira testplan where you are pushing the results
@@ -16,7 +19,7 @@ Package contains only one public method reportToXray(options) where the options 
  - `security`: parameter to pass client_id and client_secret
 
 ```
-const {reportToXray} = require("xray-service-client");
+const {reportToXrayWithJunitReport} = require("xray-client");
 
 let resultsDir = resolve(__dirname, './results/junit');
 let options = {
@@ -31,5 +34,36 @@ let options = {
         client_secret: 'password'
     }
 }
-await reportToXray(options);
+await reportToXrayWithJunitReport(options);
+```
+
+### For Allure xml and screenshots
+
+> **_IMPORTANT:_**  This works on the premise that you are adding test ids in the allure report too as it extract it from the xml to generate the request, if you want to link issues you should add them too.
+
+Package contains only one public method reportToXray(options) where the options are
+- `project`: Name of the jira server project where you are pushing the results
+- `testPlan`: Name of the jira testplan where you are pushing the results
+- `testExecutionKey`: [OPTIONAL] Name of the jira execution where you are pushing the results, in case you leave empty, it will create a new execution under test plan
+- `resultsFolder`: Path to the folder where the testsresults are stored after execution
+- `host`: url to jira server api
+- `security`: parameter to pass client_id and client_secret
+
+```
+const {reportToXrayWithAllureReport} = require("xray-client");
+
+let resultsDir = resolve(__dirname, './results/allure');
+let options = {
+    project: 'DEMO',
+    testPlan: 'DEMO-1',
+    testExecutionKey: '',
+    resultsFolder: resultsDir,
+    host: 'https://xray.cloud.getxray.app/api/v2',
+    security: {
+        client_id: 'username',
+        client_secret: 'password'
+    },
+};
+
+await reportToXrayWithAllureReport(options);
 ```
