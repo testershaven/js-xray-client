@@ -27,7 +27,6 @@ let options = {
     testPlan: 'QA-14',
     resultsFolder: resultsDir,
     fileName: 'results.xml',
-    cleanupFilesAfterUpload: false,
     host: 'https://xray.cloud.getxray.app/api/v1',
     security: {
         client_id: 'username',

@@ -9,7 +9,8 @@ async function reportToXrayWithAllureReport(options) {
 
         let worker = new Worker();
         await worker.checkOptions(options);
-        let requestBody = worker.generateXrayRequestFromAllureJson(suites, options.testPlan, options.testExecutionKey);
+        await worker.checkXrayOptions(options);
+        let requestBody = worker.generateXrayRequestFromAllureJson(suites, options);
 
         const client = new Client(options.host);
         if(options.security){
@@ -34,10 +35,6 @@ async function reportToXrayWithJunitReport(options) {
         }
 
         await client.sendResultsAsJunitReport(options.project, options.testPlan, requestBody);
-
-        if(options.cleanupFilesAfterUpload) {
-            await worker.cleanFolder(options.resultsFolder);
-        }
     } catch (e) {
         console.error('Reports were not uploaded to Xray due error: ', e.message);
     }

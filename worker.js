@@ -5,6 +5,7 @@ class Worker {
         if (!options.project) throw new InputError('Project not provided');
         if (!options.resultsFolder) throw new InputError('Results Folder not provided');
         if (!options.host) throw new InputError('Host not provided');
+        if (!options.testPlan) throw new InputError('Test plan not provided');
 
         if (options.security){
             if (!options.security.client_id) throw new InputError('Security enabled but client_id not provided');
@@ -12,25 +13,18 @@ class Worker {
         }
     }
 
-    cleanFolder(resultsDir) {
-        const fileNames = fs.readdirSync(resultsDir);
-        fileNames.forEach((fileName) => {
-            fs.unlinkSync(`${resultsDir}/${fileName}`);
-        });
-    }
-
     generateXmlRequestBody(resultsDir, fileName) {
         let rawContent = fs.readFileSync(`${resultsDir}/${fileName}`).toString();
         return rawContent;
     };
 
-    generateXrayRequestFromAllureJson(testSuites, testplanKey = '',executionKey = '') {
+    generateXrayRequestFromAllureJson(testSuites, options) {
         let info = {
-            summary : "Execution of automated tests for release v1.3",
+            summary : options.title,
             description : "This execution is automatically created when importing execution results from an external source",
             startDate : this.formatEpoch(Math.min(...testSuites.map(x => parseInt(x.start)))),
             finishDate : this.formatEpoch(Math.max(...testSuites.map(x => parseInt(x.stop)))),
-            testPlanKey : testplanKey,
+            testPlanKey : options.testPlan,
         }
 
         let testCases = [];
@@ -78,7 +72,7 @@ class Worker {
             info: info,
             tests: testCases
         }
-        if(executionKey !== '') response['executionKey'] = executionKey;
+        if(options.testExecutionKey !== '') response['executionKey'] = options.testExecutionKey;
 
         return response;
     };
