@@ -9,7 +9,6 @@ async function reportToXrayWithAllureReport(options) {
 
         let worker = new Worker();
         await worker.checkOptions(options);
-        await worker.checkXrayOptions(options);
         let requestBody = worker.generateXrayRequestFromAllureJson(suites, options);
 
         const client = new Client(options.host);

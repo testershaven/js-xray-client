@@ -57,6 +57,7 @@ let options = {
     testPlan: 'DEMO-1',
     testExecutionKey: '',
     resultsFolder: resultsDir,
+    title: 'Your title',
     host: 'https://xray.cloud.getxray.app/api/v2',
     security: {
         client_id: 'username',
