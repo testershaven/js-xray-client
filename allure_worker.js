@@ -9,20 +9,27 @@ class AllureWorker {
 
         for (const fileName of fileNames) {
             if (fileName.includes('.xml')) {
-                let stringXml = fs.readFileSync(`${this.resultsDir}/${fileName}`).toString()
-                    .replaceAll('ns2:test-suite', 'testSuite')
-                    .replaceAll('_attributes', 'atr')
-                    .replaceAll('test-cases', 'testCases')
-                    .replaceAll('stack-trace', 'stackTrace')
-                    .replaceAll('test-case', 'testCase');
+                let xmlTestCases;
+                let result;
+                try {
+                    let stringXml = fs.readFileSync(`${this.resultsDir}/${fileName}`).toString()
+                        .replaceAll('ns2:test-suite', 'testSuite')
+                        .replaceAll('_attributes', 'atr')
+                        .replaceAll('test-cases', 'testCases')
+                        .replaceAll('stack-trace', 'stackTrace')
+                        .replaceAll('test-case', 'testCase');
 
-                var options = {compact: true, ignoreComment: true, spaces: 4};
-                var result = convert.xml2js(stringXml, options);
+                    let options = {compact: true, ignoreComment: true, spaces: 4};
+                    result = convert.xml2js(stringXml, options);
 
-                let xmlTestCases = result.testSuite.testCases.testCase;
+                    xmlTestCases = result.testSuite.testCases.testCase;
+                } catch (e) {
+                    throw new AllureWorkerError('Error when converting xml to js object');
+                }
+
                 let jsonTestCases = await this.extractTestCases(xmlTestCases);
 
-                let testSuite =     {
+                let testSuite = {
                     start: result.testSuite._attributes.start,
                     stop: result.testSuite._attributes.stop,
                     name: result.testSuite.name._text,
@@ -52,40 +59,51 @@ class AllureWorker {
     async extractTestCase(xmlTestCase) {
         let jsonSteps = await this.extractSteps(xmlTestCase.steps.step);
 
-        let failure = (xmlTestCase.failure !== undefined ) ? {
-            message: xmlTestCase.failure.message._text,
-            stackTrace: xmlTestCase.failure.stackTrace._text,
-        } : {};
+        try {
+            let failure = (xmlTestCase.failure !== undefined ) ? {
+                message: xmlTestCase.failure.message._text,
+                stackTrace: xmlTestCase.failure.stackTrace._text,
+            } : {};
 
-        let testId;
-        if(xmlTestCase.labels.label.find(l => l._attributes.name === 'testId') !== undefined) {
-            let testIdArray = xmlTestCase.labels.label.find(l => l._attributes.name === 'testId')._attributes.value.split('/');
-            testId = testIdArray[testIdArray.length - 1];
-        } else {
-            testId = '';
+            let testId;
+            if(xmlTestCase.labels.label.find(l => l._attributes.name === 'testId') !== undefined) {
+                let testIdArray = xmlTestCase.labels.label.find(l => l._attributes.name === 'testId')._attributes.value.split('/');
+                testId = testIdArray[testIdArray.length - 1];
+            } else {
+                testId = '';
+            }
+
+            let issueId;
+            if(xmlTestCase.labels.label.find(l => l._attributes.name === 'issue') !== undefined) {
+                let issueArray = xmlTestCase.labels.label.find(l => l._attributes.name === 'issue')._attributes.value.split('/');
+                issueId = issueArray[issueArray.length-1];
+            } else {
+                issueId = '';
+            }
+
+            let browser;
+            if (Array.isArray(xmlTestCase.parameters.parameter)) {
+                browser = xmlTestCase.parameters.parameter.find(x => x._attributes.name === 'browser')._attributes.value;
+            } else {
+                browser = '';
+            }
+
+            let jsonTestCase = {
+                start: xmlTestCase._attributes.start,
+                stop: xmlTestCase._attributes.stop,
+                status: xmlTestCase._attributes.status,
+                testId: testId,
+                issueId: issueId,
+                browser:browser,
+                name: xmlTestCase.name._text,
+                title: xmlTestCase.title._text,
+                failure: failure,
+                steps: jsonSteps,
+            };
+            return jsonTestCase;
+        } catch (e) {
+            throw new AllureWorkerError('Error when extracting test case');
         }
-
-        let issueId;
-        if(xmlTestCase.labels.label.find(l => l._attributes.name === 'issue') !== undefined) {
-            let issueArray = xmlTestCase.labels.label.find(l => l._attributes.name === 'issue')._attributes.value.split('/');
-            issueId = issueArray[issueArray.length-1];
-        } else {
-            issueId = '';
-        }
-
-        let jsonTestCase = {
-            start: xmlTestCase._attributes.start,
-            stop: xmlTestCase._attributes.stop,
-            status: xmlTestCase._attributes.status,
-            testId: testId,
-            issueId: issueId,
-            browser: xmlTestCase.parameters.parameter._attributes.value,
-            name: xmlTestCase.name._text,
-            title: xmlTestCase.title._text,
-            failure: failure,
-            steps: jsonSteps,
-        };
-        return jsonTestCase;
     }
 
     async extractSteps(xmlTestSteps) {
@@ -94,7 +112,7 @@ class AllureWorker {
             for (const xmlTestStep of xmlTestSteps) {
                 jsonTestSteps.push(...(await this.extractStep(xmlTestStep)));
             }
-        } else if(xmlTestSteps._attributes !== undefined) {
+        } else if(xmlTestSteps !== undefined && xmlTestSteps._attributes !== undefined) {
             jsonTestSteps.push(...(await this.extractStep(xmlTestSteps)));
         }
 
@@ -102,32 +120,46 @@ class AllureWorker {
     }
 
     async extractStep(step) {
-        let jsonSteps = []; ;
+        try {
+            let jsonSteps = []; ;
 
-        let attachment;
-        if (step.attachments.attachment !== undefined ) {
-            attachment = {
-                data: fs.readFileSync( `${this.resultsDir}/${step.attachments.attachment._attributes.source}`).toString('base64'),
-                filename: step.attachments.attachment._attributes.source,
-                contentType: step.attachments.attachment._attributes.type
+            let attachment;
+            if (step.attachments.attachment !== undefined ) {
+                attachment = {
+                    data: fs.readFileSync( `${this.resultsDir}/${step.attachments.attachment._attributes.source}`).toString('base64'),
+                    filename: step.attachments.attachment._attributes.source,
+                    contentType: step.attachments.attachment._attributes.type
+                }
+            } else {
+                attachment = {};
             }
-        } else {
-            attachment = {};
+
+            let jsonTestStep = {
+                start: step._attributes.start,
+                stop: step._attributes.stop,
+                status: step._attributes.status,
+                name: step.name,
+                title: step.title,
+                attachment: attachment,
+            };
+
+            jsonSteps.push(jsonTestStep);
+            jsonSteps.push(...(await this.extractSteps(step.steps)))
+
+            return jsonSteps;
+        } catch (e) {
+            throw new AllureWorkerError('Error when extracting steps');
         }
+    }
+}
 
-        let jsonTestStep = {
-            start: step._attributes.start,
-            stop: step._attributes.stop,
-            status: step._attributes.status,
-            name: step.name,
-            title: step.title,
-            attachment: attachment,
-        };
-
-        jsonSteps.push(jsonTestStep);
-        jsonSteps.push(...(await this.extractSteps(step.steps)))
-
-        return jsonSteps;
+class AllureWorkerError extends Error {
+    constructor(message) {
+        super(message);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, AllureWorkerError);
+        }
+        this.name = 'AllureWorkerError';
     }
 }
 

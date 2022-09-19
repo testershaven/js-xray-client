@@ -3,7 +3,6 @@ const {Worker} = require("./worker");
 const {AllureWorker} = require("./allure_worker");
 
 async function reportToXrayWithAllureReport(options) {
-    try {
         let allureWorker = new AllureWorker();
         let suites = await allureWorker.generateSuitesFromAllureXml(options.resultsFolder);
 
@@ -17,13 +16,9 @@ async function reportToXrayWithAllureReport(options) {
         }
 
         return await client.sendResultsAsXrayJson(JSON.stringify(requestBody));
-    } catch (e) {
-        console.error('Reports were not uploaded to Xray due error: ', e.message);
-    }
 }
 
 async function reportToXrayWithJunitReport(options) {
-    try {
         let worker = new Worker();
         await worker.checkOptions(options);
         let requestBody = worker.generateXmlRequestBody(options.resultsFolder, options.fileName);
@@ -34,9 +29,6 @@ async function reportToXrayWithJunitReport(options) {
         }
 
         await client.sendResultsAsJunitReport(options.project, options.testPlan, requestBody);
-    } catch (e) {
-        console.error('Reports were not uploaded to Xray due error: ', e.message);
-    }
 }
 
 module.exports = { reportToXrayWithJunitReport , reportToXrayWithAllureReport};
