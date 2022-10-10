@@ -30,41 +30,43 @@ class Worker {
         let testCases = [];
         testSuites.forEach(rts => {
             rts.testCases.forEach(rtc => {
-                let defects = [];
-                if (rtc.issueId !== '') {
-                    defects.push(rtc.issueId)
-                }
-
-                let steps = [];
-                let evidence = [];
-                for (const step of rtc.steps) {
-                    if (step.attachment.contentType !== undefined) {
-                        evidence.push(step.attachment)
+                if(rtc.testId !== '') {
+                    let defects = [];
+                    if (rtc.issueId !== '') {
+                        defects.push(rtc.issueId)
                     }
 
-                    let newStep =  {
-                        status: step.status,
-                        comment: step.name._text,
+                    let steps = [];
+                    let evidence = [];
+                    for (const step of rtc.steps) {
+                        if (step.attachment.contentType !== undefined) {
+                            evidence.push(step.attachment)
+                        }
+
+                        let newStep =  {
+                            status: step.status,
+                            comment: step.name._text,
+                        }
+                        steps.push(newStep);
                     }
-                    steps.push(newStep);
-                }
 
-                let message = (rtc.failure.message === undefined) ? { message: "No errors"} : rtc.failure.message;
-                let comment = {
-                    steps: JSON.stringify(steps),
-                    message
-                }
+                    let message = (rtc.failure.message === undefined) ? { message: "No errors"} : rtc.failure.message;
+                    let comment = {
+                        steps: JSON.stringify(steps),
+                        message
+                    }
 
-                let testCase = {
-                    testKey : rtc.testId,
-                    start : this.formatEpoch(parseInt(rtc.start)),
-                    finish : this.formatEpoch(parseInt(rtc.stop)),
-                    status : rtc.status,
-                    comment: JSON.stringify(comment),
-                    defects,
-                    evidence,
-                };
-                testCases.push(testCase);
+                    let testCase = {
+                        testKey : rtc.testId,
+                        start : this.formatEpoch(parseInt(rtc.start)),
+                        finish : this.formatEpoch(parseInt(rtc.stop)),
+                        status : rtc.status,
+                        comment: JSON.stringify(comment),
+                        defects,
+                        evidence,
+                    };
+                    testCases.push(testCase);
+                }
             });
         });
 
