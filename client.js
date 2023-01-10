@@ -13,7 +13,7 @@ class Client {
 
   async sendResultsAsJunitReport(projectName, testplan = '', requestBody) {
     let config = { headers: {'Content-Type': 'text/xml'} };
-    let path = `/import/execution/junit?projectKey=${projectName}` + (testplan !== '') ? `&testPlanKey=${testplan}` : '';
+    let path = `/import/execution/junit?projectKey=${projectName}&testPlanKey=${testplan}`;
     return await axios.post(path, requestBody, config);
   }
 

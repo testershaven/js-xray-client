@@ -61,7 +61,7 @@ class Worker {
                         start : this.formatEpoch(parseInt(rtc.start)),
                         finish : this.formatEpoch(parseInt(rtc.stop)),
                         status : rtc.status,
-                        comment: JSON.stringify(comment),
+                        comment: '',
                         defects,
                         evidence,
                     };
