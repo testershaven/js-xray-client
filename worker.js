@@ -50,18 +50,11 @@ class Worker {
                         steps.push(newStep);
                     }
 
-                    let message = (rtc.failure.message === undefined) ? { message: "No errors"} : rtc.failure.message;
-                    let comment = {
-                        steps: JSON.stringify(steps),
-                        message
-                    }
-
                     let testCase = {
                         testKey : rtc.testId,
                         start : this.formatEpoch(parseInt(rtc.start)),
                         finish : this.formatEpoch(parseInt(rtc.stop)),
                         status : rtc.status,
-                        comment: '',
                         defects,
                         evidence,
                     };
@@ -74,7 +67,7 @@ class Worker {
             info: info,
             tests: testCases
         }
-        if(options.testExecutionKey !== '') response['executionKey'] = options.testExecutionKey;
+        if(options.testExecutionKey !== '') response['testExecutionKey'] = options.testExecutionKey;
 
         return response;
     };
